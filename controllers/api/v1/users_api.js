@@ -132,34 +132,39 @@ module.exports.signUp = async function (req, res) {
 };
 
 module.exports.editProfile = async function (req, res) {
-  try {
-    let user = await User.findById(req.body.id);
+  if (req.body.password == req.body.confirm_password) {
+    try {
+      let user = await User.findById(req.body.id);
 
-    user.height = req.body.height;
-    user.weight = req.body.weight;
-    user.goal = req.body.goal;
-    user.target = req.body.target;
+      user.name = req.body.name;
+      user.password = req.body.password;
+      user.role = req.body.role
 
-    user.save();
+      user.save();
 
-    return res.json(200, {
-      message: "User is updated Successfully",
+      return res.json(200, {
+        message: "User is updated Successfully",
 
-      data: {
-        //user.JSON() part gets encrypted
+        data: {
+          //user.JSON() part gets encrypted
 
-        // token: jwt.sign(user.toJSON(), env.jwt_secret, {
-        //   expiresIn: "100000",
-        // }),
-        user,
-      },
-      success: true,
-    });
-  } catch (err) {
-    console.log(err);
+          // token: jwt.sign(user.toJSON(), env.jwt_secret, {
+          //   expiresIn: "100000",
+          // }),
+          user,
+        },
+        success: true,
+      });
+    } catch (err) {
+      console.log(err);
 
-    return res.json(500, {
-      message: "In Server Error",
+      return res.json(500, {
+        message: "Internal Server Error",
+      });
+    }
+  } else {
+    return res.json(422, {
+      message: "Passwords donot match",
     });
   }
 };
