@@ -15,25 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    height: {
-        type: Number,
-        
-        default: 0
-    },
-    weight: {
-        type:Number,
-        default: 0
-    },
-    goal: {
+    role: {
         type: String,
-        default:''
-        
-    },
-    target:{
-        type:Number,
-        default:0
+        required: true
     }
-
 
 }, {
     timestamps: true
