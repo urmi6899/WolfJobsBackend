@@ -18,7 +18,36 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         required: true
+    },
+    address: {
+        type: String,
+        default:''
+    },
+    phonenumber:{
+        type:String,
+        default:''
+    },
+    hours:{
+        type:String,
+        default:''
+    },
+    dob:{
+        type:String,
+        default:''
+    },
+    gender:{
+        type:String,
+        default:''
+    },
+    availability:{
+        type:String,
+        default:''
+    },
+    skills:{
+        type:Array,
+        
     }
+
 
 }, {
     timestamps: true
