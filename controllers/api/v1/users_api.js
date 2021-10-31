@@ -2,6 +2,7 @@ const User = require("../../../models/user");
 const jwt = require("jsonwebtoken");
 const Food = require("../../../models/food");
 const History = require('../../../models/history');
+const Job = require('../../../models/job');
 
 
 
@@ -227,4 +228,38 @@ module.exports.getHistory = async function (req, res) {
     });
   }
 };
+
+
+module.exports.createJob = async function (req, res) {
+  let user = await User.findOne({ _id: req.body.id });
+  check = req.body.skills
+  try {
+    let job = await Job.create({
+      name: req.body.name,
+      managerid: user._id,
+      skills:check.split(','),
+      location:req.body.location,
+      description:req.body.description,
+      pay:req.body.pay,
+      schedule:req.body.schedule,
+
+    });
+
+    return res.json(200, {
+      data: {
+        job: job,
+        //token: jwt.sign(user.toJSON(), env.jwt_secret, { expiresIn: "100000" })
+      },
+      message: "Job Created!!",
+      success: true,
+    });
+  } catch (err) {
+    console.log(err);
+
+    return res.json(500, {
+      message: "NOT CREATED",
+    });
+  }
+};
+
 
